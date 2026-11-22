@@ -1,0 +1,48 @@
+name: voice-lab
+# Banco de pruebas de voz. NO publica nada. Sube WAVs como artefacto para escucharlos.
+on:
+  workflow_dispatch:
+    inputs:
+      engines:
+        description: "Motores separados por coma: chatterbox_es, chatterbox_mtl, edge"
+        default: "edge,chatterbox_es"
+permissions:
+  contents: read
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Sistema
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg git-lfs
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-chatterbox-v1
+      - name: Dependencias
+        run: |
+          pip install --quiet soundfile numpy edge-tts
+          if echo "${{ inputs.engines }}" | grep -q chatterbox; then
+            pip install --quiet torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+            pip install --quiet numpy==1.26.0 resampy==0.4.3 librosa==0.10.0 transformers==4.46.3 diffusers==0.29.0 \
+              omegaconf==2.3.0 resemble-perth==1.0.1 silero-vad==5.1.2 conformer==0.3.2 s3tokenizer safetensors huggingface_hub
+            pip install --quiet --no-deps chatterbox-tts || true
+            git clone --depth 1 https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-es-es space || true
+          fi
+      - name: Generar
+        continue-on-error: true
+        run: |
+          mkdir -p out
+          for e in $(echo "${{ inputs.engines }}" | tr ',' ' '); do
+            echo "::group::$e"
+            python scripts/voice_lab.py "$e" "out/$e" 2>&1 | tee "out/$e.log" || echo "FALLO $e"
+            echo "::endgroup::"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: voice-lab
+          path: out/
