@@ -1,0 +1,8 @@
+models/
+bin/
+out/
+.venv*/
+*.tgz
+.env
+*.wav
+*.mp4

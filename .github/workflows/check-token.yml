@@ -1,0 +1,32 @@
+name: Comprobar token de Instagram
+# Solo lectura: no publica nada. Se lanza a mano desde la pestaña Actions.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GRAPH_VERSION: v23.0   # si Meta la retira, cambiar aquí
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar la cuenta (sin mostrar el token)
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
+        run: |
+          set -u
+          [ -n "${IG_ACCESS_TOKEN:-}" ] || { echo "::error::Falta el secreto IG_ACCESS_TOKEN"; exit 1; }
+          [ -n "${IG_USER_ID:-}" ] || { echo "::error::Falta la variable IG_USER_ID"; exit 1; }
+          echo "::add-mask::$IG_ACCESS_TOKEN"
+          base="https://graph.facebook.com/${GRAPH_VERSION}/${IG_USER_ID}"
+          echo "== Cuenta =="
+          curl -sS -G "$base" --data-urlencode "fields=username,name,account_type" \
+            --data-urlencode "access_token=$IG_ACCESS_TOKEN" | tee /tmp/acct.json | jq 'if .error then {error:{type:.error.type,code:.error.code,message:.error.message}} else . end'
+          echo "== Cupo de publicación (24 h) =="
+          curl -sS -G "$base/content_publishing_limit" --data-urlencode "fields=quota_usage,config" \
+            --data-urlencode "access_token=$IG_ACCESS_TOKEN" | jq 'if .error then {error:{type:.error.type,code:.error.code,message:.error.message}} else . end'
+          jq -e '.username' /tmp/acct.json >/dev/null || { echo "::error::No se pudo leer el usuario: revisa el token y los permisos"; exit 1; }
