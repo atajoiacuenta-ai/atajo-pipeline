@@ -1,0 +1,69 @@
+{
+ "id": "003",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "Una reseña sin responder deja mala imagen.",
+   "pause": 0.45
+  },
+  {
+   "text": "Copia este prompt y pega debajo la reseña.",
+   "pause": 0.35
+  },
+  {
+   "text": "Pídele tono educado, sin excusas y con una solución.",
+   "pause": 0.4
+  },
+  {
+   "text": "En segundos te devuelve un borrador.",
+   "pause": 0.55
+  },
+  {
+   "text": "Léelo entero, cambia lo que no suene a ti y publícalo tú.",
+   "pause": 0.45
+  },
+  {
+   "text": "El prompt completo está en la descripción.",
+   "pause": 0.55
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ],
+ "scenes": [
+  {
+   "type": "prompt",
+   "first": 0,
+   "label": "PROMPT PARA RESEÑAS",
+   "prompt": [
+    "Responde a esta reseña de mi negocio:",
+    "«Tardaron 40 minutos en atenderme».",
+    "Tono educado, sin excusas y con una",
+    "solución. Máximo 60 palabras."
+   ],
+   "result_tag": "Borrador de la IA",
+   "result": [
+    "Gracias por contárnoslo, y sentimos la espera.",
+    "No es la atención que queremos ofrecer.",
+    "Escríbenos por privado y lo solucionamos.",
+    "Un saludo, el equipo de [tu negocio]."
+   ]
+  },
+  {
+   "type": "checklist",
+   "first": 4,
+   "label": "ANTES DE PUBLICAR",
+   "items": [
+    "Léelo entero",
+    "Cambia lo que no suene a ti",
+    "Publícalo tú"
+   ]
+  },
+  {
+   "type": "outro",
+   "first": 6
+  }
+ ]
+}

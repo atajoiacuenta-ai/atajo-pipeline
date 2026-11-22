@@ -1,0 +1,79 @@
+{
+ "id": "005",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "¿Tu bandeja de entrada es un caos?",
+   "pause": 0.4
+  },
+  {
+   "text": "Gmail puede etiquetar solo los correos que llegan.",
+   "pause": 0.55
+  },
+  {
+   "text": "Paso uno: desde el ordenador, abre las opciones de búsqueda de Gmail.",
+   "pause": 0.4
+  },
+  {
+   "text": "Paso dos: escribe el remitente, por ejemplo, tu asesoría.",
+   "pause": 0.4
+  },
+  {
+   "text": "Paso tres: pulsa Crear filtro y marca Aplicar la etiqueta.",
+   "pause": 0.4
+  },
+  {
+   "text": "Paso cuatro: elige la etiqueta y confirma.",
+   "pause": 0.45
+  },
+  {
+   "text": "Desde ese momento, los correos nuevos de ese remitente llegarán ya etiquetados.",
+   "pause": 0.55
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "first": 0,
+   "label": "BANDEJA DE ENTRADA",
+   "items": [
+    "Correo de la asesoría",
+    "Facturas de proveedores",
+    "Mensajes de clientes"
+   ],
+   "tag": "sin etiquetar"
+  },
+  {
+   "type": "steps",
+   "first": 2,
+   "label": "FILTRO EN GMAIL",
+   "steps": [
+    [
+     "Opciones de búsqueda",
+     "En Gmail, desde el ordenador"
+    ],
+    [
+     "Escribe el remitente",
+     "Campo «De»"
+    ],
+    [
+     "Crear filtro",
+     "Marca Aplicar la etiqueta"
+    ],
+    [
+     "Elige la etiqueta",
+     "Y confirma con Crear filtro"
+    ]
+   ]
+  },
+  {
+   "type": "outro",
+   "first": 7
+  }
+ ]
+}

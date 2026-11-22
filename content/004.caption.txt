@@ -1,0 +1,10 @@
+¿Te da apuro reclamar una factura? Copia este prompt y rellena tus datos:
+
+«Redacta un recordatorio de pago amable. Factura [número], [importe] €, vencida el [fecha]. Cliente: [nombre]. Breve y cordial. Termina pidiendo que confirmen la fecha de pago.»
+
+Antes de enviarlo, comprueba el importe, la fecha de vencimiento y el nombre del cliente.
+
+Guarda este vídeo y sígueme para más atajos.
+
+🤖 Voz y vídeo generados con IA. El texto de la pantalla es un ejemplo generado con IA.
+#facturas #autonomos #pymes #inteligenciaartificial #cobros

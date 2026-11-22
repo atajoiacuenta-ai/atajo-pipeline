@@ -51,5 +51,98 @@
    "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
    "pause": 0
   }
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "first": 0,
+   "label": "TAREAS QUE TE ROBAN TIEMPO",
+   "items": [
+    "Contestar mensajes",
+    "Confirmar citas",
+    "Hacer presupuestos",
+    "Reclamar facturas"
+   ],
+   "tag": "se repite"
+  },
+  {
+   "type": "chat",
+   "first": 2,
+   "label": "1 · WHATSAPP",
+   "name": "Tu negocio",
+   "status": "asistente con IA · en línea",
+   "msgs": [
+    [
+     "c",
+     "¿Qué horario tenéis?"
+    ],
+    [
+     "a",
+     "Abrimos de 9:00 a 20:00"
+    ],
+    [
+     "c",
+     "¿Cuánto cuesta?"
+    ],
+    [
+     "a",
+     "Te paso la tarifa ahora mismo"
+    ],
+    [
+     "c",
+     "¿Cómo llego?"
+    ],
+    [
+     "a",
+     "Aquí tienes la ubicación"
+    ]
+   ],
+   "pin_last": true,
+   "note": "Solo te avisa si hace falta"
+  },
+  {
+   "type": "status",
+   "first": 6,
+   "label": "2 · CITAS",
+   "banner": [
+    "Recordatorio enviado",
+    "Mañana a las 10:30 · ¿Confirmas?"
+   ],
+   "items": [
+    [
+     "10:30",
+     "Ana · Revisión"
+    ],
+    [
+     "12:00",
+     "Luis · Primera visita"
+    ],
+    [
+     "17:15",
+     "Marta · Consulta"
+    ]
+   ],
+   "from": "Pendiente",
+   "to": "Confirmada"
+  },
+  {
+   "type": "doc",
+   "first": 8,
+   "label": "3 · PRESUPUESTOS",
+   "email": [
+    "Hola, ¿me podéis pasar un presupuesto",
+    "para reformar la cocina? Gracias."
+   ],
+   "from": "Cliente",
+   "subject": "Solicitud de presupuesto",
+   "doc": "PRESUPUESTO",
+   "num": "Nº 0042",
+   "total": "TOTAL",
+   "stamp": "Borrador listo · revisar"
+  },
+  {
+   "type": "outro",
+   "first": 10
+  }
  ]
 }

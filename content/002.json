@@ -1,0 +1,91 @@
+{
+ "id": "002",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "¿Te escriben clientes cuando ya has cerrado?",
+   "pause": 0.4
+  },
+  {
+   "text": "Con WhatsApp Business puedes responderles solo, sin tocar el móvil.",
+   "pause": 0.55
+  },
+  {
+   "text": "Paso uno: abre la aplicación WhatsApp Business. La normal no tiene esta función.",
+   "pause": 0.45
+  },
+  {
+   "text": "Paso dos: en la pestaña Herramientas, entra en Mensaje de ausencia.",
+   "pause": 0.4
+  },
+  {
+   "text": "Paso tres: activa Enviar mensaje de ausencia y escribe tu texto.",
+   "pause": 0.4
+  },
+  {
+   "text": "Paso cuatro: en Programar, elige el horario.",
+   "pause": 0.45
+  },
+  {
+   "text": "En el texto di cuándo abres y cómo pueden contactarte. Tienes un ejemplo en la descripción.",
+   "pause": 0.5
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ],
+ "scenes": [
+  {
+   "type": "chat",
+   "first": 0,
+   "label": "FUERA DE HORARIO",
+   "name": "Tu negocio",
+   "status": "WhatsApp Business",
+   "badge": "Auto",
+   "msgs": [
+    [
+     "c",
+     "¿Abrís mañana?"
+    ],
+    [
+     "a",
+     "Ahora estamos cerrados"
+    ],
+    [
+     "a",
+     "Abrimos mañana a las 9:00"
+    ]
+   ],
+   "note": "Responde sin que tú hagas nada"
+  },
+  {
+   "type": "steps",
+   "first": 2,
+   "label": "MENSAJE DE AUSENCIA",
+   "steps": [
+    [
+     "Abre WhatsApp Business",
+     "La normal no tiene esta opción"
+    ],
+    [
+     "Pestaña Herramientas",
+     "Mensaje de ausencia"
+    ],
+    [
+     "Activa y escribe tu texto",
+     "Enviar mensaje de ausencia"
+    ],
+    [
+     "Programa el horario",
+     "Botón Programar"
+    ]
+   ]
+  },
+  {
+   "type": "outro",
+   "first": 7
+  }
+ ]
+}

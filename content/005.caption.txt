@@ -1,0 +1,15 @@
+Etiqueta y ordena tu correo solo con un filtro de Gmail (desde el ordenador):
+
+1) Abre las opciones de búsqueda de Gmail (el icono a la derecha del cuadro de búsqueda).
+2) Escribe el remitente en el campo «De».
+3) Pulsa «Crear filtro» y marca «Aplicar la etiqueta».
+4) Elige o crea la etiqueta y pulsa «Crear filtro».
+
+A partir de entonces, los correos nuevos de ese remitente se etiquetan solos.
+
+Guarda este vídeo y sígueme para más atajos.
+
+Fuente: Ayuda de Gmail (Crear reglas para filtrar tus correos).
+
+🤖 Voz y vídeo generados con IA.
+#gmail #productividad #autonomos #pymes #organizacion

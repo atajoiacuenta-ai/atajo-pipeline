@@ -1,0 +1,73 @@
+{
+ "id": "006",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "Sales de una reunión con las notas desordenadas.",
+   "pause": 0.4
+  },
+  {
+   "text": "Pégalas en un asistente de inteligencia artificial con este prompt.",
+   "pause": 0.4
+  },
+  {
+   "text": "Pídele un resumen corto, las decisiones y las tareas, con responsable y fecha.",
+   "pause": 0.45
+  },
+  {
+   "text": "Revisa el resultado antes de enviarlo a nadie.",
+   "pause": 0.55
+  },
+  {
+   "text": "Un aviso importante antes de pegar nada.",
+   "pause": 0.4
+  },
+  {
+   "text": "No pegues datos personales de clientes ni contraseñas.",
+   "pause": 0.4
+  },
+  {
+   "text": "Si algo es confidencial, mejor quítalo antes.",
+   "pause": 0.55
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ],
+ "scenes": [
+  {
+   "type": "prompt",
+   "first": 0,
+   "label": "PROMPT PARA REUNIONES",
+   "prompt": [
+    "Resume estas notas en 3 puntos.",
+    "Añade las decisiones y una lista de",
+    "tareas con responsable y fecha.",
+    "Notas: [pega aquí tus notas]"
+   ],
+   "result_tag": "Resultado de la IA",
+   "result": [
+    "Resumen: la entrega es el jueves, mismo precio.",
+    "Decisión: Ana confirma el pedido.",
+    "Tarea: Ana · confirmar el pedido · hoy",
+    "Tarea: Luis · avisar al cliente · jueves"
+   ]
+  },
+  {
+   "type": "checklist",
+   "first": 4,
+   "label": "ANTES DE PEGAR NADA",
+   "items": [
+    "Sin datos personales",
+    "Sin contraseñas",
+    "Nada confidencial"
+   ]
+  },
+  {
+   "type": "outro",
+   "first": 7
+  }
+ ]
+}

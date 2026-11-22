@@ -1,0 +1,68 @@
+{
+ "id": "004",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "¿Te da apuro reclamar una factura?",
+   "pause": 0.4
+  },
+  {
+   "text": "Pide a una inteligencia artificial que redacte el recordatorio.",
+   "pause": 0.4
+  },
+  {
+   "text": "Dale el número de factura, el importe y la fecha de vencimiento.",
+   "pause": 0.4
+  },
+  {
+   "text": "Y pídele un tono cordial y breve.",
+   "pause": 0.55
+  },
+  {
+   "text": "Antes de enviarlo, comprueba tres cosas.",
+   "pause": 0.4
+  },
+  {
+   "text": "El importe, la fecha de vencimiento y el nombre del cliente.",
+   "pause": 0.55
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ],
+ "scenes": [
+  {
+   "type": "prompt",
+   "first": 0,
+   "label": "PROMPT PARA COBRAR",
+   "prompt": [
+    "Redacta un recordatorio de pago amable.",
+    "Factura 0031, 480 €, vencida el 10/11.",
+    "Cliente: Taller Ruiz. Breve y cordial."
+   ],
+   "result_tag": "Borrador de la IA",
+   "result": [
+    "Hola, Taller Ruiz: os recuerdo que la factura",
+    "0031, de 480 €, venció el 10 de noviembre.",
+    "Si ya la habéis pagado, ignorad este mensaje.",
+    "Si no, ¿confirmáis la fecha de pago? Gracias."
+   ]
+  },
+  {
+   "type": "checklist",
+   "first": 4,
+   "label": "ANTES DE ENVIAR",
+   "items": [
+    "El importe",
+    "La fecha de vencimiento",
+    "El nombre del cliente"
+   ]
+  },
+  {
+   "type": "outro",
+   "first": 6
+  }
+ ]
+}

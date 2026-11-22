@@ -1,11 +1,11 @@
 name: render-reel
-# Genera voz (Chatterbox es-ES, referencia sharvard) + vídeo de un Reel y lo sube como artefacto. NO publica nada.
+# Genera voz (Chatterbox es-ES, referencia sharvard) + vídeo de uno o varios Reels y los sube como artefacto. NO publica nada.
 on:
   workflow_dispatch:
     inputs:
-      content:
-        description: "Ruta del guion JSON"
-        default: "content/001.json"
+      contents:
+        description: "Guiones JSON separados por espacio"
+        default: "content/002.json content/003.json content/004.json content/005.json content/006.json"
       tempo:
         description: "Velocidad de la voz (1.0 natural, 1.1 = 10% más rápida)"
         default: "1.0"
@@ -33,24 +33,22 @@ jobs:
           pip install --quiet numpy==1.26.0 resampy==0.4.3 librosa==0.10.0 transformers==4.46.3 diffusers==0.29.0 \
             omegaconf==2.3.0 resemble-perth==1.0.1 silero-vad==5.1.2 conformer==0.3.2 s3tokenizer safetensors huggingface_hub
           git clone --depth 1 https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-es-es space
-      - name: Voz
+      - name: Voz (el modelo se carga una vez)
         env:
           TEMPO: ${{ inputs.tempo }}
-        run: python scripts/voice_cb.py "${{ inputs.content }}" chatterbox
-      - name: Vídeo
-        env:
-          VOICE: chatterbox
-        run: python scripts/reel_v3.py render
-      - name: Reunir resultados
-        env:
-          C: ${{ inputs.content }}
+        run: python scripts/voice_cb.py ${{ inputs.contents }}
+      - name: Vídeo y resultados
         run: |
           mkdir -p result
-          cp out/reel-v3/chatterbox/reel_v3.mp4 result/reel.mp4
-          cp out/voice-v3/chatterbox/voice.wav result/voice.wav
-          cp out/voice-v3/chatterbox/meta.json result/meta.json
-          cp "$C" result/guion.json
-          cp "${C%.json}.caption.txt" result/caption.txt || true
+          for c in ${{ inputs.contents }}; do
+            id=$(python -c "import json,sys;print(json.load(open('$c'))['id'])")
+            python scripts/reel.py render "$c"
+            mkdir -p "result/$id"
+            cp "out/reel/$id/reel.mp4" "result/$id/reel.mp4"
+            cp "out/voice-v3/$id/voice.wav" "result/$id/voice.wav"
+            cp "$c" "result/$id/guion.json"
+            cp "${c%.json}.caption.txt" "result/$id/caption.txt" || true
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: reel
