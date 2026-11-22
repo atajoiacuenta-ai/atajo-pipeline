@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       engines:
-        description: "Motores separados por coma: chatterbox_es, chatterbox_mtl, edge"
-        default: "edge,chatterbox_es"
+        description: "Motores separados por coma: edge:+15%, edge:+25%, chatterbox_es, chatterbox_es_m"
+        default: "edge:+15%,edge:+25%,chatterbox_es,chatterbox_es_m"
 permissions:
   contents: read
 jobs:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: hf-chatterbox-v1
+          key: hf-chatterbox-v2
       - name: Dependencias
         run: |
           pip install --quiet soundfile numpy edge-tts
@@ -30,16 +30,20 @@ jobs:
             pip install --quiet torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
             pip install --quiet numpy==1.26.0 resampy==0.4.3 librosa==0.10.0 transformers==4.46.3 diffusers==0.29.0 \
               omegaconf==2.3.0 resemble-perth==1.0.1 silero-vad==5.1.2 conformer==0.3.2 s3tokenizer safetensors huggingface_hub
-            pip install --quiet --no-deps chatterbox-tts || true
-            git clone --depth 1 https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-es-es space || true
+            git clone --depth 1 https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-es-es space
+            ls space/chatterbox/src/chatterbox
+            mkdir -p refs
+            curl -fsSL -o refs/es_es_f1.wav https://storage.googleapis.com/chatterbox-demo-samples/mtl-v3-single-language-prompts/es-es/es_es_f1.wav
+            curl -fsSL -o refs/es_m1.flac https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/es_m1.flac
           fi
       - name: Generar
         continue-on-error: true
         run: |
           mkdir -p out
           for e in $(echo "${{ inputs.engines }}" | tr ',' ' '); do
+            d=$(echo "$e" | tr ':+%' '_pP')
             echo "::group::$e"
-            python scripts/voice_lab.py "$e" "out/$e" 2>&1 | tee "out/$e.log" || echo "FALLO $e"
+            python scripts/voice_lab.py "$e" "out/$d" 2>&1 | tee "out/$d.log" || echo "FALLO $e"
             echo "::endgroup::"
           done
       - uses: actions/upload-artifact@v4
