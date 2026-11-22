@@ -5,6 +5,8 @@ engines:
   edge[:+15%]      voz es-ES-AlvaroNeural con velocidad relativa (linea base, servicio no oficial)
   chatterbox_es    finetune oficial es-ES; voz de referencia = REF_F (muestra oficial es-ES)
   chatterbox_es_m  idem con muestra masculina oficial REF_M
+  chatterbox_es_sh idem con referencia = voz Piper sharvard (refs/ref_sharvard.wav)
+Chatterbox genera ademas out/<motor>/grave/ (tono -2 semitonos + graves)
 Env: REF_F, REF_M (rutas wav), GAP (segundos entre frases en full.wav)"""
 import sys, os, json, asyncio, subprocess, traceback, time
 import numpy as np, soundfile as sf
@@ -61,6 +63,8 @@ try:
         run_edge(arg or '+0%')
     elif name == 'chatterbox_es':
         run_chatterbox(os.environ.get('REF_F', 'refs/es_es_f1.wav'))
+    elif name == 'chatterbox_es_sh':
+        run_chatterbox(os.environ.get('REF_SH', 'refs/ref_sharvard.wav'))
     elif name == 'chatterbox_es_m':
         run_chatterbox(os.environ.get('REF_M', 'refs/es_m1.flac'))
     else:
@@ -71,3 +75,10 @@ finally:
         full = np.concatenate([x for c in chunks for x in (c, gap)])
         sf.write(f"{out}/full.wav", full, sr_out)
         print('full.wav', round(len(full) / sr_out, 1), 's')
+        # Variante "grave": baja el tono ~2 semitonos conservando formantes y refuerza graves (sin reverb)
+        if name.startswith('chatterbox'):
+            os.makedirs(f"{out}/grave", exist_ok=True)
+            af = "rubberband=pitch=0.891:formant=preserved,bass=g=3:f=140"
+            for i in range(len(chunks)):
+                subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f"{out}/{i:02d}.wav", '-af', af, f"{out}/grave/{i:02d}.wav"], check=True)
+            subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f"{out}/full.wav", '-af', af, f"{out}/grave/full.wav"], check=True)

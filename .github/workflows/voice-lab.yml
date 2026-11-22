@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       engines:
-        description: "Motores separados por coma: edge:+15%, edge:+25%, chatterbox_es, chatterbox_es_m"
-        default: "edge:+15%,edge:+25%,chatterbox_es,chatterbox_es_m"
+        description: "Motores separados por coma: edge:+15%, edge:+25%, chatterbox_es, chatterbox_es_m, chatterbox_es_sh"
+        default: "chatterbox_es_sh,chatterbox_es_m"
 permissions:
   contents: read
 jobs:
