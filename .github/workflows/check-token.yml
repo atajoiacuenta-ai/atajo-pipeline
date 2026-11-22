@@ -24,7 +24,7 @@ jobs:
           echo "::add-mask::$IG_ACCESS_TOKEN"
           base="https://graph.facebook.com/${GRAPH_VERSION}/${IG_USER_ID}"
           echo "== Cuenta =="
-          curl -sS -G "$base" --data-urlencode "fields=username,name,account_type" \
+          curl -sS -G "$base" --data-urlencode "fields=username,name" \
             --data-urlencode "access_token=$IG_ACCESS_TOKEN" | tee /tmp/acct.json | jq 'if .error then {error:{type:.error.type,code:.error.code,message:.error.message}} else . end'
           echo "== Cupo de publicación (24 h) =="
           curl -sS -G "$base/content_publishing_limit" --data-urlencode "fields=quota_usage,config" \

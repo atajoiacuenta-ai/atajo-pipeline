@@ -1,0 +1,22 @@
+name: Prueba de subida a Instagram (NO publica)
+# Crea el contenedor de un Reel, sube el vídeo de muestra y espera a que Meta lo procese.
+# Nunca llama a media_publish: no aparece nada en la cuenta.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Tests del publicador (servidor simulado)
+        run: python3 tests/test_publish.py
+      - name: Subida de prueba sin publicar
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
+          GRAPH_VERSION: v23.0
+        run: python3 scripts/ig_publish.py --video samples/test_reel.mp4 --caption-file samples/caption.txt --dry-run
