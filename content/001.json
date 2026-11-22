@@ -1,0 +1,55 @@
+{
+ "id": "001",
+ "voice": "chatterbox_es_sh",
+ "tempo": 1.0,
+ "clauses": [
+  {
+   "text": "Si tienes un negocio,",
+   "pause": 0.16
+  },
+  {
+   "text": "estás perdiendo horas cada semana en tareas que la inteligencia artificial puede hacer por ti.",
+   "pause": 0.5
+  },
+  {
+   "text": "Primera: contestar siempre las mismas preguntas.",
+   "pause": 0.3
+  },
+  {
+   "text": "Horarios, precios, cómo llegar.",
+   "pause": 0.4
+  },
+  {
+   "text": "Un asistente con inteligencia artificial responde al instante,",
+   "pause": 0.14
+  },
+  {
+   "text": "y tú solo entras cuando de verdad hace falta.",
+   "pause": 0.5
+  },
+  {
+   "text": "Segunda: los recordatorios.",
+   "pause": 0.28
+  },
+  {
+   "text": "Un mensaje automático el día antes evita que os dejen plantados.",
+   "pause": 0.5
+  },
+  {
+   "text": "Y tercera: los presupuestos.",
+   "pause": 0.28
+  },
+  {
+   "text": "El asistente lee el correo del cliente y te deja el borrador listo para revisar.",
+   "pause": 0.5
+  },
+  {
+   "text": "Nada de esto exige saber programar.",
+   "pause": 0.35
+  },
+  {
+   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "pause": 0
+  }
+ ]
+}
