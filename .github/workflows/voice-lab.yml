@@ -5,7 +5,7 @@ on:
     inputs:
       engines:
         description: "Motores separados por coma: edge:+15%, edge:+25%, chatterbox_es, chatterbox_es_m, chatterbox_es_sh"
-        default: "chatterbox_es_sh,chatterbox_es_m"
+        default: "chatterbox_es_sh:e0.5_c0.5_t0.8,chatterbox_es_sh:e0.7_c0.3_t0.9,chatterbox_es_sh:e0.6_c0.4_t1.0"
 permissions:
   contents: read
 jobs:
@@ -38,6 +38,8 @@ jobs:
           fi
       - name: Generar
         continue-on-error: true
+        env:
+          CONTENT: content/003.json
         run: |
           mkdir -p out
           for e in $(echo "${{ inputs.engines }}" | tr ',' ' '); do

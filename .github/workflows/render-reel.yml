@@ -9,6 +9,15 @@ on:
       tempo:
         description: "Velocidad de la voz (1.0 natural, 1.1 = 10% más rápida)"
         default: "1.0"
+      exag:
+        description: "Expresividad (exaggeration): 0.5 normal, 0.7 más expresiva"
+        default: "0.5"
+      cfg:
+        description: "cfg_weight: 0.5 normal, 0.3 más pausada y natural"
+        default: "0.5"
+      temp:
+        description: "Temperatura: 0.8 normal, 1.0 más variación"
+        default: "0.8"
 permissions:
   contents: read
 jobs:
@@ -36,6 +45,9 @@ jobs:
       - name: Voz (el modelo se carga una vez)
         env:
           TEMPO: ${{ inputs.tempo }}
+          EXAG: ${{ inputs.exag }}
+          CFG: ${{ inputs.cfg }}
+          TEMP: ${{ inputs.temp }}
         run: python scripts/voice_cb.py ${{ inputs.contents }}
       - name: Vídeo y resultados
         run: |

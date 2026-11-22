@@ -13,7 +13,9 @@ import numpy as np, soundfile as sf
 
 engine, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
-clauses = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'samples', 'voice_clauses.json')))
+_cf = os.environ.get('CONTENT', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'samples', 'voice_clauses.json'))
+clauses = json.load(open(_cf))
+if isinstance(clauses, dict): clauses = [c['text'] for c in clauses['clauses']]
 sr_out = 24000
 GAP = float(os.environ.get('GAP', '0.12'))
 chunks = []
@@ -26,7 +28,9 @@ def save(i, wav, sr):
     sf.write(f"{out}/{i:02d}.wav", wav, sr_out)
     chunks.append(wav)
 
-def run_chatterbox(ref):
+def run_chatterbox(ref, arg=''):
+    P = dict(e=0.5, c=0.5, t=0.8)
+    for kv in filter(None, arg.split('_')): P[kv[0]] = float(kv[1:])
     import torch
     torch.set_num_threads(os.cpu_count() or 2)
     if not os.path.exists(ref):
@@ -39,8 +43,8 @@ def run_chatterbox(ref):
     model = ChatterboxTTS.from_pretrained('cpu')
     for i, t in enumerate(clauses):
         t0 = time.time()
-        w = model.generate(t[:300], audio_prompt_path=ref, exaggeration=0.5,
-                           temperature=0.8, cfg_weight=0.5, language_id='es')
+        w = model.generate(t[:300], audio_prompt_path=ref, exaggeration=P['e'],
+                           temperature=P['t'], cfg_weight=P['c'], language_id='es')
         save(i, w.cpu().numpy(), model.sr)
         print(i, f"{time.time()-t0:.1f}s", t, flush=True)
 
@@ -64,7 +68,7 @@ try:
     elif name == 'chatterbox_es':
         run_chatterbox(os.environ.get('REF_F', 'refs/es_es_f1.wav'))
     elif name == 'chatterbox_es_sh':
-        run_chatterbox(os.environ.get('REF_SH', 'refs/ref_sharvard.wav'))
+        run_chatterbox(os.environ.get('REF_SH', 'refs/ref_sharvard.wav'), arg)
     elif name == 'chatterbox_es_m':
         run_chatterbox(os.environ.get('REF_M', 'refs/es_m1.flac'))
     else:

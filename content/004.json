@@ -12,11 +12,11 @@
    "pause": 0.4
   },
   {
-   "text": "Dale el número de factura, el importe y la fecha de vencimiento.",
+   "text": "Dale los datos: el importe y la fecha de vencimiento.",
    "pause": 0.4
   },
   {
-   "text": "Y pídele un tono cordial y breve.",
+   "text": "Indica también un tono cordial y breve.",
    "pause": 0.55
   },
   {
@@ -28,7 +28,7 @@
    "pause": 0.55
   },
   {
-   "text": "Guarda este vídeo y sígueme para más atajos con inteligencia artificial.",
+   "text": "Guarda esta publicación y sigue la cuenta para más atajos con inteligencia artificial.",
    "pause": 0
   }
  ],

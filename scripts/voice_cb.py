@@ -7,6 +7,20 @@ import sys, os, json, subprocess, time
 import numpy as np, soundfile as sf
 
 SR = 24000; LEAD = 0.15; TAIL = 0.35
+EXAG = float(os.environ.get('EXAG', 0.5)); CFG = float(os.environ.get('CFG', 0.5)); TEMP = float(os.environ.get('TEMP', 0.8))
+
+def esdrujulas(text):
+    """Palabras con tilde en la antepenúltima sílaba (esdrújulas): el modelo las suele leer como llanas."""
+    import re
+    out = []
+    for w in re.findall(r"[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+", text):
+        m = re.search(r"[áéíóú]", w.lower())
+        if not m: continue
+        rest = w.lower()[m.end():]
+        nuclei = re.findall(r"(?:[iuü][aeo]|[aeo][iu]|[aeoiuü])(?=[^aeoiuüáéíóú]|$)|[aeo](?=[aeo])", rest)
+        n = len(re.findall(r"[iuü]?[aeo][iu]?|[iuü]", rest))
+        if n >= 2: out.append(w)
+    return out
 FAKE = bool(os.environ.get('FAKE'))
 if not FAKE:
     import torch
@@ -22,7 +36,7 @@ def synth(text, path):
         w = 0.3 * np.sin(2 * np.pi * 150 * t) * np.minimum(1, np.minimum(t, t[::-1]) * 20); sr = SR
     else:
         t0 = time.time()
-        w = model.generate(text[:300], audio_prompt_path=ref, exaggeration=0.5, temperature=0.8, cfg_weight=0.5, language_id='es')
+        w = model.generate(text[:300], audio_prompt_path=ref, exaggeration=EXAG, temperature=TEMP, cfg_weight=CFG, language_id='es')
         w = w.cpu().numpy().squeeze(); sr = model.sr
         print(f"  {time.time()-t0:.1f}s  {text}", flush=True)
     if sr != SR:
@@ -41,6 +55,9 @@ for spec_path in sys.argv[1:]:
     tempo = float(os.environ.get('TEMPO', spec.get('tempo', 1.0)))
     out = f"out/voice-v3/{name}"; os.makedirs(out + "/clips", exist_ok=True)
     print(f"== {name} ({len(clauses)} cláusulas)", flush=True)
+    for c in clauses:
+        bad = esdrujulas(c['text'])
+        if bad: print("  AVISO esdrújulas (suelen leerse mal):", bad, "en:", c['text'], flush=True)
     pieces = [np.zeros(int(LEAD * SR), dtype='float32')]; times = []; cur = LEAD
     for i, c in enumerate(clauses):
         f = f"{out}/clips/{i:02d}.wav"
