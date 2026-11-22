@@ -11,13 +11,13 @@ on:
         default: "1.0"
       exag:
         description: "Expresividad (exaggeration): 0.5 normal, 0.7 más expresiva"
-        default: "0.5"
+        default: "0.7"
       cfg:
         description: "cfg_weight: 0.5 normal, 0.3 más pausada y natural"
-        default: "0.5"
+        default: "0.3"
       temp:
         description: "Temperatura: 0.8 normal, 1.0 más variación"
-        default: "0.8"
+        default: "0.9"
 permissions:
   contents: read
 jobs:

@@ -7,7 +7,7 @@ import sys, os, json, subprocess, time
 import numpy as np, soundfile as sf
 
 SR = 24000; LEAD = 0.15; TAIL = 0.35
-EXAG = float(os.environ.get('EXAG', 0.5)); CFG = float(os.environ.get('CFG', 0.5)); TEMP = float(os.environ.get('TEMP', 0.8))
+EXAG = float(os.environ.get('EXAG', 0.7)); CFG = float(os.environ.get('CFG', 0.3)); TEMP = float(os.environ.get('TEMP', 0.9))  # elegidos por escucha: e0.7_c0.3_t0.9
 
 def esdrujulas(text):
     """Palabras con tilde en la antepenúltima sílaba (esdrújulas): el modelo las suele leer como llanas."""
