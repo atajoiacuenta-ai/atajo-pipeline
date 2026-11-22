@@ -6,3 +6,5 @@ out/
 .env
 *.wav
 *.mp4
+.DS_Store
+__pycache__/
