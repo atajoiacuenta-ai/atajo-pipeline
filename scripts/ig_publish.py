@@ -22,9 +22,12 @@ def call(method, url, data=None, headers=None, body=None, retries=3):
         except urllib.error.HTTPError as e:
             txt = e.read().decode(errors="replace")
             if e.code >= 500 and n < retries - 1: time.sleep(5 * (n + 1)); continue
-            try: err = json.loads(txt).get("error", {})
-            except Exception: err = {"message": txt[:300]}
-            fail(redact(f"HTTP {e.code} en {method} {url.split('?')[0]} -> tipo={err.get('type')} código={err.get('code')} sub={err.get('error_subcode')} mensaje={err.get('message')}"))
+            try: parsed = json.loads(txt)
+            except Exception: parsed = None
+            if isinstance(parsed, dict) and isinstance(parsed.get("error"), dict):
+                err = parsed["error"]
+                fail(redact(f"HTTP {e.code} en {method} {url.split('?')[0]} -> tipo={err.get('type')} código={err.get('code')} sub={err.get('error_subcode')} mensaje={err.get('message')}"))
+            fail(redact(f"HTTP {e.code} en {method} {url.split('?')[0]} -> cuerpo={txt[:600]!r}"))
         except urllib.error.URLError as e:
             if n < retries - 1: time.sleep(5 * (n + 1)); continue
             fail(redact(f"red: {e.reason}"))
@@ -54,7 +57,7 @@ def main():
     print(f"Contenedor creado: {cid}")
 
     with open(a.video, "rb") as f: payload = f.read()
-    up = call("POST", uri, headers={"Authorization": f"OAuth {TOKEN}", "offset": "0", "file_size": str(size), "Content-Type": "application/octet-stream"}, body=payload)
+    up = call("POST", uri, headers={"Authorization": f"OAuth {TOKEN}", "offset": "0", "file_size": str(size)}, body=payload)
     if not up.get("success", True): fail(f"la subida no confirmó éxito: {redact(json.dumps(up))}")
     print(f"Vídeo subido ({size / 1e6:.1f} MB)")
 
